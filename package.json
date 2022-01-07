@@ -1,0 +1,26 @@
+{
+  "name": "ably-control-api-action",
+  "version": "1.0.0",
+  "description": "A GitHub Action to use the Ably Control API.",
+  "main": "index.js",
+  "scripts": {
+    "build": "ncc build index.js --license licenses.txt",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ably-labs/ably-control-api-action.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ably-labs/ably-control-api-action/issues"
+  },
+  "homepage": "https://github.com/ably-labs/ably-control-api-action#readme",
+  "dependencies": {
+    "@actions/core": "^1.6.0",
+    "@actions/github": "^5.0.0",
+    "axios": "^0.24.0"
+  }
+}

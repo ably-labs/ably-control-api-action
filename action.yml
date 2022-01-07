@@ -1,0 +1,21 @@
+name: 'Ably Control API'
+description: 'GitHub Action to use the Ably Control API in your workflow.'
+inputs:
+  account-id:
+    description: 'The name of your Ably account.'
+    required: true
+    default: 'MyAblyAccountId'
+  control-api-key:
+    description: 'The Control API key.'
+    required: true
+    default: 'MyAblyAccountId'
+  app-name:  # id of input
+    description: 'The name of the Ably app to be created.'
+    required: true
+    default: 'MyAblyAppName'
+outputs:
+  client-id: # id of output
+    description: 'The ID of the created Ably app.'
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
