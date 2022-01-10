@@ -9,7 +9,11 @@ A GitHub Action to use the Ably Control API.
 The action has the following required inputs:
 
 * `account-id` (**required**); the Ably account ID, see [these instructions](https://ably.com/documentation/control-api#account-id) how to obtain this.
-* `control-api-key`  (**required**); an Ably Control API key, see [these instructions](https://ably.com/documentation/control-api#authentication) how to create one.
+* `control-api-key`  (**required**); an Ably Control API key, see [these instructions](https://ably.com/documentation/control-api#authentication) how to create one. This key needs the following permissions:
+  * read:app
+  * write:app
+  * read:key
+  * write:key
 * `app-name` (**optional**); the name for the Ably app to create. Defaults to the repository name.
 * `create-key` (**optional**); a boolean value indicating whether to create an API key for the new app. Defaults to `'true'`.
 * `key-name` (**optional**); the friendly name for the API key. Defaults to `'Generated API key'`.
