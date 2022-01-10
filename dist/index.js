@@ -4778,6 +4778,50 @@ const createApp = (accountId, controlApiKey, appName) => {
   });
 }
 
+const createApiKey = (appId, controlApiKey, keyName, keyCapabilities) => {
+  return new Promise(resolve => {
+    const keyUrl = `https://control.ably.net/v1/apps/${appId}/keys`;
+    const capabilities = keyCapabilities.split(',');
+    axios({
+      method: 'post',
+      url: keyUrl,
+      headers: { 'Authorization': `Bearer ${controlApiKey}` },
+      data: {
+        "name": keyName,
+        "capability": capabilities,
+      }
+    })
+    .then(function (response) {
+      core.info(`Created API key with name: ${response.data.name}.`);
+      core.setSecret('api-key-id');
+      core.setOutput("api-key-id", response.data.id);
+      core.setSecret('api-key-secret');
+      core.setOutput("api-key-secret", response.data.secret);
+      resolve();
+    })
+    .catch(function (error) {
+      core.error(error);
+      if (error.response.status === 422) {
+        // Key with the exact name already exists.
+        // Get the key and return its id.
+        axios({
+          method: 'get',
+          url: keyUrl,
+          headers: { 'Authorization': `Bearer ${controlApiKey}` },
+        })
+        .then(function (response) {
+          let key = response.data.filter(key => key.name.toLowerCase() === keyName.toLowerCase())[0];
+          core.setSecret('api-key-id');
+          core.setOutput("api-key-id", key.id);
+          core.setSecret('api-key-secret');
+          core.setOutput("api-key-secret", key.secret);
+          resolve();
+        });
+      }
+    });
+  });
+}
+
 try {
   const accountId = core.getInput('account-id');
   const controlApiKey = core.getInput('control-api-key');
@@ -4795,43 +4839,7 @@ try {
   core.setFailed(error.message);
 }
 
-function createApiKey(appId, controlApiKey, keyName, keyCapabilities) {
-  const keyUrl = `https://control.ably.net/v1/apps/${appId}/keys`;
-  const capabilities = keyCapabilities.split(',');
-  axios({
-    method: 'post',
-    url: keyUrl,
-    headers: { 'Authorization': `Bearer ${controlApiKey}` },
-    data: {
-      "name": keyName,
-      "capability": capabilities,
-    }
-  })
-  .then(function (response) {
-    core.setSecret('api-key-id');
-    core.setOutput("api-key-id", response.data.id);
-    core.setSecret('api-key-secret');
-    core.setOutput("api-key-secret", response.data.secret);
-  })
-  .catch(function (error) {
-    if (error.response.status === 422) {
-      // Key with the exact name already exists.
-      // Get the key and return its id.
-      axios({
-        method: 'get',
-        url: keyUrl,
-        headers: { 'Authorization': `Bearer ${controlApiKey}` },
-      })
-      .then(function (response) {
-        let key = response.data.filter(key => key.name.toLowerCase() === keyName.toLowerCase())[0];
-        core.setSecret('api-key-id');
-        core.setOutput("api-key-id", key.id);
-        core.setSecret('api-key-secret');
-        core.setOutput("api-key-secret", key.secret);
-      });
-    }
-  });
-}
+
 })();
 
 module.exports = __webpack_exports__;
