@@ -4737,23 +4737,35 @@ var __webpack_exports__ = {};
 (() => {
 const core = __nccwpck_require__(8864);
 const axios = __nccwpck_require__(5462);
+let appId;
 
 try {
-  const accountId = core.getInput('account-id');
-  const controlApiKey = core.getInput('control-api-key');
-  const appName = core.getInput('app-name');
-  createApp(accountId, controlApiKey, appName);
+  const accountId = getInput('account-id');
+  const controlApiKey = getInput('control-api-key');
+  const appName = getInput('app-name');
+  const createKey = getInput('create-key');
+  const keyName = getInput('key-name');
+  const keyCapabilities = getInput('key-capabilities');
+  let createAppPromise = new Promise((resolve, reject) => {
+    createApp(accountId, controlApiKey, appName);
+    resolve(appId);
+  });
+
+  if (createKey) {
+    createAppPromise.then((appId) => {
+      createApiKey(appId, controlApiKey, keyName, keyCapabilities);
+    });
+  }
 } catch (error) {
-  core.setFailed(error.message);
+  setFailed(error.message);
 }
 
 function createApp(accountId, controlApiKey, appName)
 {
-  const createAppUrl = `https://control.ably.net/v1/accounts/${accountId}/apps`;
-  const getApsUrl = `https://control.ably.net/v1/accounts/${accountId}/apps`;
+  const appUrl = `https://control.ably.net/v1/accounts/${accountId}/apps`;
   axios({
     method: 'post',
-    url: createAppUrl,
+    url: appUrl,
     headers: { 'Authorization': `Bearer ${controlApiKey}` },
     data: {
       "name": appName,
@@ -4766,7 +4778,8 @@ function createApp(accountId, controlApiKey, appName)
     }
   })
   .then(function (response) {
-    core.setOutput("app-id", response.data.id);
+    setOutput("app-id", response.data.id);
+    appId = response.data.id;
   })
   .catch(function (error) {
     if (error.response.status === 422) {
@@ -4774,19 +4787,54 @@ function createApp(accountId, controlApiKey, appName)
       // Get the app and return its id.
       axios({
         method: 'get',
-        url: getApsUrl,
+        url: appUrl,
         headers: { 'Authorization': `Bearer ${controlApiKey}` },
       })
       .then(function (response) {
         let app = response.data.filter(app => app.name.toLowerCase() === appName.toLowerCase())[0];
-        core.setOutput("app-id", app.id);
+        setOutput("app-id", app.id);
+        appId = app.id;
       });
     }
   });
 }
 
-function createKey(accountId, controlApiKey, appName) {
-  
+function createApiKey(appId, controlApiKey, keyName, keyCapabilities) {
+  const keyUrl = `https://control.ably.net/v1/apps/${appId}/keys`;
+  const capabilities = keyCapabilities.split(',');
+  axios({
+    method: 'post',
+    url: keyUrl,
+    headers: { 'Authorization': `Bearer ${controlApiKey}` },
+    data: {
+      "name": keyName,
+      "capability": capabilities,
+    }
+  })
+  .then(function (response) {
+    core.setSecret('api-key-id');
+    setOutput("api-key-id", response.data.id);
+    core.setSecret('api-key-secret');
+    setOutput("api-key-secret", response.data.secret);
+  })
+  .catch(function (error) {
+    if (error.response.status === 422) {
+      // Key with the exact name already exists.
+      // Get the key and return its id.
+      axios({
+        method: 'get',
+        url: keyUrl,
+        headers: { 'Authorization': `Bearer ${controlApiKey}` },
+      })
+      .then(function (response) {
+        let key = response.data.filter(key => key.name.toLowerCase() === keyName.toLowerCase())[0];
+        core.setSecret('api-key-id');
+        setOutput("api-key-id", key.id);
+        core.setSecret('api-key-secret');
+        setOutput("api-key-secret", key.secret);
+      });
+    }
+  });
 }
 })();
 

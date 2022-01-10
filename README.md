@@ -11,17 +11,19 @@ The action has the following required inputs:
 * `account-id` (**required**); the Ably account ID, see [these instructions](https://ably.com/documentation/control-api#account-id) how to obtain this.
 * `control-api-key`  (**required**); an Ably Control API key, see [these instructions](https://ably.com/documentation/control-api#authentication) how to create one.
 * `app-name`  (**required**); the name of the Ably app to create via this action.
-* `createKey` (**optional**); a boolean value indicating whether to create a key for the new app. Default is `'true'`.
-* `keyCapabilities` (**optional**); a comma-separated list of key capabilities to grant to the new app. Default is `'publish, subscribe'`.
+* `create-key` (**optional**); a boolean value indicating whether to create an API key for the new app. Defaults to `'true'`.
+* `key-name` (**optional**); the friendly name of the API key. Defaults to `'Generated API key from GitHub Action'`.
+* `key-capabilities` (**optional**); a comma-separated list of key capabilities to grant to the new app. Defaults to `'publish, subscribe'`.
 
 It is important to keep the `account-id` and `control-api-key` inputs secret, as they are used to authenticate with the Ably Control API. Put these values in GitHub secrets and read the secret values when configuring the inputs of this action (see the example below).
 
 ### Outputs
 
 * `app-id`; the ID of the created Ably app.
-* `app-api-key`; the API key of the created Ably app.
+* `api-key-id`; the API key of the created Ably app. This is marked as a secret so it won't be visible in the GitHub workflow logs.
+* `api-key-secret`; the API key of the created Ably app. This is marked as a secret so it won't be visible in the GitHub workflow logs.
 
-### Example
+### Example with required inputs only
 
 ```yml
 jobs:

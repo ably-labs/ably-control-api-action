@@ -28,8 +28,10 @@ inputs:
 outputs:
   app-id:
     description: 'The ID of the created Ably app.'
-  app-api-key:
-    description: 'The API key of the created Ably app.'
+  api-key-id:
+    description: 'The ID of the API key of the created Ably app.'
+  api-key-secret:
+    description: 'The secret of the API key of the created Ably app.'
 runs:
   using: 'node16'
   main: 'dist/index.js'
