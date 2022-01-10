@@ -4744,8 +4744,10 @@ try {
   const appName = core.getInput('app-name');
   console.log(`Ably app to create: ${appName}!`);
   const createAppUrl = `https://control.ably.net/v1/accounts/${accountId}/apps`;
-  const config = {
-    headers: { Authorization: `Bearer ${controlApiKey}` },
+  axios({
+    method: 'post',
+    url: createAppUrl,
+    headers: { 'Authorization': `Bearer ${controlApiKey}` },
     data: {
       "name": appName,
       "status": "enabled",
@@ -4755,8 +4757,7 @@ try {
       "apnsPrivateKey": null,
       "apnsUseSandboxEndpoint": false
     }
-  };
-  axios.post(createAppUrl, config).then(function (response) {
+  }).then(function (response) {
     core.setOutput("app-id", response.id);
   });
 } catch (error) {
