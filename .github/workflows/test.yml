@@ -13,6 +13,6 @@ jobs:
         with:
             account-id: '${{ secrets.ABLY_ACCOUNT_ID }}'
             control-api-key: '${{ secrets.ABLY_CONTROL_API_KEY }}'
-            app-name: 'Created By GitHub Action 2'
+            app-name: 'Created By GitHub Action 3'
       - name: Get the output
-        run: echo App ID ${{ steps.ablyapp.outputs.app-id }}"
+        run: echo "App ID ${{ steps.ablyapp.outputs.app-id }}"
