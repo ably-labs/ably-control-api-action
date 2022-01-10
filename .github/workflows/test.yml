@@ -1,5 +1,7 @@
-on: [push]
-
+on: 
+  push:
+    paths-ignore:
+      - '**/*.md'
 jobs:
   test_ably_control_api_action:
     runs-on: ubuntu-latest
@@ -7,12 +9,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Add Ably App
+      - name: Create Ably App
         id: ablyapp
         uses: ./
         with:
             account-id: '${{ secrets.ABLY_ACCOUNT_ID }}'
             control-api-key: '${{ secrets.ABLY_CONTROL_API_KEY }}'
-            app-name: 'Created By GitHub Action 3'
+            app-name: 'Created By GitHub Action 4'
       - name: Get the output
         run: echo "App ID ${{ steps.ablyapp.outputs.app-id }}"
