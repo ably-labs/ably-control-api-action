@@ -21,20 +21,23 @@ try {
       "apnsPrivateKey": null,
       "apnsUseSandboxEndpoint": false
     }
-  }).then(function (response) {
-    if (response.status === 422) {
-      // App already exists
+  })
+  .then(function (response) {
+    core.setOutput("app-id", response.data.id);
+  })
+  .catch(function (error) {
+    if (error.response.status === 422) {
+      // App with the exact name already exists.
       // Get the app and return its id.
       axios({
         method: 'get',
         url: getApsUrl,
         headers: { 'Authorization': `Bearer ${controlApiKey}` },
-        }).then(function (response) {
-          let app = response.data.filter(app => app.id.toLowerCase() === appName.toLowerCase())[0];
-          core.setOutput("app-id", app.id);
-        });
-    } else {
-      core.setOutput("app-id", response.data.id);
+      })
+      .then(function (response) {
+        let app = response.data.filter(app => app.name.toLowerCase() === appName.toLowerCase())[0];
+        core.setOutput("app-id", app.id);
+      });
     }
   });
 } catch (error) {
