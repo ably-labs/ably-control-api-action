@@ -24,8 +24,7 @@ const createApp = (accountId, controlApiKey, appName) => {
     })
     .catch(function (error) {
       if (error.response.status === 422) {
-        // App with the exact name already exists.
-        // Get the app and return its id.
+        core.info(`App named ${appName} already exists.`);
         axios({
           method: 'get',
           url: appUrl,
@@ -33,6 +32,7 @@ const createApp = (accountId, controlApiKey, appName) => {
         })
         .then(function (response) {
           let app = response.data.filter(app => app.name.toLowerCase() === appName.toLowerCase())[0];
+          core.info(`Using id of existing app named ${app.name}.`);
           core.setOutput("app-id", app.id);
           resolve(app.id);
         });
@@ -62,30 +62,29 @@ const createApiKey = (appId, controlApiKey, keyName, keyCapabilities) => {
       core.info(`Created API key with name: ${response.data.name}.`);
       core.setSecret('api-key-id');
       core.setOutput("api-key-id", response.data.id);
-      core.setSecret('api-key-secret');
-      core.setOutput("api-key-secret", response.data.key);
+      core.setSecret('api-key-key');
+      core.setOutput("api-key-key", response.data.key);
       resolve();
     })
     .catch(function (error) {
-      core.error(JSON.stringify(error));
       if (error.response.status === 422) {
-        // Key with the exact name already exists.
-        // Get the key and return its id.
+        core.info(`API Key named ${keyName} already exists.`);
         axios({
           method: 'get',
           url: keyUrl,
           headers: { 'Authorization': `Bearer ${controlApiKey}` },
         })
         .then(function (response) {
-          core.info(response);
           let key = response.data.filter(key => key.name.toLowerCase() === keyName.toLowerCase())[0];
-          core.info(key);
+          core.info(`Using id and key of existing API Key named ${key.name}.`);
           core.setSecret('api-key-id');
           core.setOutput("api-key-id", key.id);
-          core.setSecret('api-key-secret');
-          core.setOutput("api-key-secret", key.key);
+          core.setSecret('api-key-key');
+          core.setOutput("api-key-key", key.key);
           resolve();
         });
+      } else {
+        throw error;
       }
     });
   });

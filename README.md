@@ -20,8 +20,8 @@ It is important to keep the `account-id` and `control-api-key` inputs secret, as
 ### Outputs
 
 * `app-id`; the ID of the created Ably app.
-* `api-key-id`; the API key of the created Ably app. This is marked as a secret so it won't be visible in the GitHub workflow logs.
-* `api-key-secret`; the API key of the created Ably app. This is marked as a secret so it won't be visible in the GitHub workflow logs.
+* `api-key-id`; the ID of the created API key. This is marked as a secret so it won't be visible in the GitHub workflow logs.
+* `api-key-key`; the key value of the created API key. This is marked as a secret so it won't be visible in the GitHub workflow logs.
 
 ### Example with required inputs only
 
