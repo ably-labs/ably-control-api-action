@@ -3,12 +3,12 @@ const axios = require('axios');
 let appId;
 
 try {
-  const accountId = getInput('account-id');
-  const controlApiKey = getInput('control-api-key');
-  const appName = getInput('app-name');
-  const createKey = getInput('create-key');
-  const keyName = getInput('key-name');
-  const keyCapabilities = getInput('key-capabilities');
+  const accountId = core.getInput('account-id');
+  const controlApiKey = core.getInput('control-api-key');
+  const appName = core.getInput('app-name');
+  const createKey = core.getInput('create-key');
+  const keyName = core.getInput('key-name');
+  const keyCapabilities = core.getInput('key-capabilities');
   createApp(accountId, controlApiKey, appName);
   if (createKey) {
     createApiKey(appId, controlApiKey, keyName, keyCapabilities);
@@ -35,7 +35,7 @@ function createApp(accountId, controlApiKey, appName)
     }
   })
   .then(function (response) {
-    setOutput("app-id", response.data.id);
+    core.setOutput("app-id", response.data.id);
     appId = response.data.id;
   })
   .catch(function (error) {
@@ -49,7 +49,7 @@ function createApp(accountId, controlApiKey, appName)
       })
       .then(function (response) {
         let app = response.data.filter(app => app.name.toLowerCase() === appName.toLowerCase())[0];
-        setOutput("app-id", app.id);
+        core.setOutput("app-id", app.id);
         appId = app.id;
       });
     }
@@ -70,9 +70,9 @@ function createApiKey(appId, controlApiKey, keyName, keyCapabilities) {
   })
   .then(function (response) {
     core.setSecret('api-key-id');
-    setOutput("api-key-id", response.data.id);
+    core.setOutput("api-key-id", response.data.id);
     core.setSecret('api-key-secret');
-    setOutput("api-key-secret", response.data.secret);
+    core.setOutput("api-key-secret", response.data.secret);
   })
   .catch(function (error) {
     if (error.response.status === 422) {
@@ -86,9 +86,9 @@ function createApiKey(appId, controlApiKey, keyName, keyCapabilities) {
       .then(function (response) {
         let key = response.data.filter(key => key.name.toLowerCase() === keyName.toLowerCase())[0];
         core.setSecret('api-key-id');
-        setOutput("api-key-id", key.id);
+        core.setOutput("api-key-id", key.id);
         core.setSecret('api-key-secret');
-        setOutput("api-key-secret", key.secret);
+        core.setOutput("api-key-secret", key.secret);
       });
     }
   });
