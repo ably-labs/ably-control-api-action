@@ -5,6 +5,8 @@ jobs:
     runs-on: ubuntu-latest
     name: Test the Ably Control API Action
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Add Ably App
         id: ablyapp
         uses: ./
