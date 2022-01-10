@@ -4800,7 +4800,7 @@ const createApiKey = (appId, controlApiKey, keyName, keyCapabilities) => {
       resolve();
     })
     .catch(function (error) {
-      core.error(error);
+      core.error(JSON.stringify(error));
       if (error.response.status === 422) {
         // Key with the exact name already exists.
         // Get the key and return its id.
@@ -4810,7 +4810,9 @@ const createApiKey = (appId, controlApiKey, keyName, keyCapabilities) => {
           headers: { 'Authorization': `Bearer ${controlApiKey}` },
         })
         .then(function (response) {
+          core.info(response);
           let key = response.data.filter(key => key.name.toLowerCase() === keyName.toLowerCase())[0];
+          core.info(key);
           core.setSecret('api-key-id');
           core.setOutput("api-key-id", key.id);
           core.setSecret('api-key-secret');
