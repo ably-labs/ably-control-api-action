@@ -12,7 +12,7 @@ inputs:
   app-name:
     description: 'The name of the Ably app to be created.'
     required: false
-    default: $GITHUB_REPOSITORY
+    default: '${GITHUB_REPOSITORY}'
   create-key:
     description: 'Boolean to indicate if an API key should be created.'
     required: false
