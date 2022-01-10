@@ -6,7 +6,7 @@ try {
   const accountId = core.getInput('account-id');
   const controlApiKey = core.getInput('control-api-key');
   const appName = core.getInput('app-name');
-  const createKey = core.getInput('create-key');
+  const createKey = core.getBooleanInput('create-key');
   const keyName = core.getInput('key-name');
   const keyCapabilities = core.getInput('key-capabilities');
   createApp(accountId, controlApiKey, appName);
