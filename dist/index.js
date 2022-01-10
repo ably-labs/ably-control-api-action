@@ -4756,6 +4756,7 @@ const createApp = (accountId, controlApiKey, appName) => {
       }
     })
     .then(function (response) {
+      core.setOutput("app-name", response.data.name);
       core.setOutput("app-id", response.data.id);
       resolve(response.data.id);
     })
@@ -4772,6 +4773,7 @@ const createApp = (accountId, controlApiKey, appName) => {
             app.name.toLowerCase() === appName.toLowerCase() &&
             app.status.toLowerCase() === "enabled")[0];
           core.info(`Using id of existing app named ${app.name}.`);
+          core.setOutput("app-name", app.name);
           core.setOutput("app-id", app.id);
           resolve(app.id);
         });

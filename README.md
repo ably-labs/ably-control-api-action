@@ -10,32 +10,36 @@ The action has the following required inputs:
 
 * `account-id` (**required**); the Ably account ID, see [these instructions](https://ably.com/documentation/control-api#account-id) how to obtain this.
 * `control-api-key`  (**required**); an Ably Control API key, see [these instructions](https://ably.com/documentation/control-api#authentication) how to create one.
-* `app-name`  (**required**); the name of the Ably app to create via this action.
+* `app-name` (**optional**); the name for the Ably app to create. Defaults to the repository name.
 * `create-key` (**optional**); a boolean value indicating whether to create an API key for the new app. Defaults to `'true'`.
-* `key-name` (**optional**); the friendly name of the API key. Defaults to `'Generated API key from GitHub Action'`.
-* `key-capabilities` (**optional**); a comma-separated list of key capabilities to grant to the new app. Defaults to `'publish, subscribe'`.
+* `key-name` (**optional**); the friendly name for the API key. Defaults to `'Generated API key'`.
+* `key-capabilities` (**optional**); a comma-separated list of capabilities to grant to the new key. Defaults to `'publish, subscribe'`. See the complete [list of capabilities](https://ably.com/documentation/core-features/authentication#capability-operations).
 
 It is important to keep the `account-id` and `control-api-key` inputs secret, as they are used to authenticate with the Ably Control API. Put these values in GitHub secrets and read the secret values when configuring the inputs of this action (see the example below).
 
 ### Outputs
 
+* `app-name`; the name of the created Ably app.
 * `app-id`; the ID of the created Ably app.
 * `api-key-id`; the ID of the created API key. This is marked as a secret so it won't be visible in the GitHub workflow logs.
 * `api-key-key`; the key value of the created API key. This is marked as a secret so it won't be visible in the GitHub workflow logs.
 
-### Example with required inputs only
+### Examples 
+
+### Using only the required inputs
 
 ```yml
-jobs:
-    - name: Create Ably App
-      id: ablyapp
-      uses: ./
-      with:
-          account-id: '${{ secrets.ABLY_ACCOUNT_ID }}'
-          control-api-key: '${{ secrets.ABLY_CONTROL_API_KEY }}'
-          app-name: 'My new Ably app 1'
-    - name: Get the output
-      run: echo "App ID ${{ steps.ablyapp.outputs.app-id }}"
+
+- name: Create Ably App
+  id: ablyapp
+  uses: ./
+  with:
+    account-id: '${{ secrets.ABLY_ACCOUNT_ID }}'
+    control-api-key: '${{ secrets.ABLY_CONTROL_API_KEY }}'
+- name: Get the output
+  run: |
+    echo "App Name: ${{ steps.ablyapp.outputs.app-name }}"
+    echo "App ID: ${{ steps.ablyapp.outputs.app-id }}"
 ```
 
 ## More information

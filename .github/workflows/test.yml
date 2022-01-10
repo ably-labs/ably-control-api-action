@@ -16,4 +16,6 @@ jobs:
             account-id: '${{ secrets.ABLY_ACCOUNT_ID }}'
             control-api-key: '${{ secrets.ABLY_CONTROL_API_KEY }}'
       - name: Get the output
-        run: echo "App ID ${{ steps.ablyapp.outputs.app-id }}"
+        run: |
+          echo "App Name: ${{ steps.ablyapp.outputs.app-name }}"
+          echo "App ID: ${{ steps.ablyapp.outputs.app-id }}"

@@ -8,7 +8,7 @@ inputs:
     description: 'The Control API key.'
     required: true
   app-name:
-    description: 'The name of the Ably app to be created.'
+    description: 'The name for the Ably app to be created.'
     required: false
     default: ${{ github.event.repository.name }}
   create-key:
@@ -24,6 +24,8 @@ inputs:
     required: false
     default: 'publish, subscribe'
 outputs:
+  app-name:
+    description: 'The name of the created Ably app.'
   app-id:
     description: 'The ID of the created Ably app.'
   api-key-id:
