@@ -21,7 +21,7 @@ try {
       "apnsUseSandboxEndpoint": false
     }
   }).then(function (response) {
-    core.setOutput("app-id", response.id);
+    core.setOutput("app-id", response.data.id);
   });
 } catch (error) {
   core.setFailed(error.message);
