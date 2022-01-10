@@ -4,15 +4,15 @@ inputs:
   account-id:
     description: 'The name of your Ably account.'
     required: true
-    default: 'MyAblyAccountId'
+    default: 'ABLY_ACCOUNT_ID'
   control-api-key:
     description: 'The Control API key.'
     required: true
-    default: 'MyAblyAccountId'
+    default: 'ABLY_CONTROL_API_KEY'
   app-name:
     description: 'The name of the Ably app to be created.'
     required: true
-    default: 'Generated App from GitHub Action'
+    default: $GITHUB_REPOSITORY
   create-key:
     description: 'Boolean to indicate if an API key should be created.'
     required: false
@@ -20,7 +20,7 @@ inputs:
   key-name:
     description: 'The friendly name for the API key.'
     required: false
-    default: 'Generated API key from GitHub Action'
+    default: 'Generated API key'
   key-capabilities:
     description: 'Comma separated list of capabilities to assign to the API key.'
     required: false
