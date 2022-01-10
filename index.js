@@ -51,7 +51,7 @@ const createApiKey = (appId, controlApiKey, keyName, keyCapabilities) => {
       headers: { 'Authorization': `Bearer ${controlApiKey}` },
       data: {
         "name": keyName,
-        "capability": capabilities,
+        "capability": { "*": capabilities }
       }
     })
     .then(function (response) {
@@ -59,7 +59,7 @@ const createApiKey = (appId, controlApiKey, keyName, keyCapabilities) => {
       core.setSecret('api-key-id');
       core.setOutput("api-key-id", response.data.id);
       core.setSecret('api-key-secret');
-      core.setOutput("api-key-secret", response.data.secret);
+      core.setOutput("api-key-secret", response.data.key);
       resolve();
     })
     .catch(function (error) {
@@ -77,7 +77,7 @@ const createApiKey = (appId, controlApiKey, keyName, keyCapabilities) => {
           core.setSecret('api-key-id');
           core.setOutput("api-key-id", key.id);
           core.setSecret('api-key-secret');
-          core.setOutput("api-key-secret", key.secret);
+          core.setOutput("api-key-secret", key.key);
           resolve();
         });
       }
