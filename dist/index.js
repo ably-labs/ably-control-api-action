@@ -4785,6 +4785,7 @@ const createApiKey = (appId, controlApiKey, keyName, keyCapabilities) => {
       .split('-')
       .map(capability => capability.trim())
       .filter(capability => capability !== '');
+    core.info(capabilities);
     axios({
       method: 'post',
       url: keyUrl,
