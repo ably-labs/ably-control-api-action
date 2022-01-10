@@ -1,23 +1,6 @@
 const core = require('@actions/core');
 const axios = require('axios');
 
-try {
-  const accountId = core.getInput('account-id');
-  const controlApiKey = core.getInput('control-api-key');
-  const appName = core.getInput('app-name');
-  const createKey = core.getBooleanInput('create-key');
-  const keyName = core.getInput('key-name');
-  const keyCapabilities = core.getInput('key-capabilities');
-  createApp(accountId, controlApiKey, appName).then((appId) =>  {
-    if (createKey) {
-      core.info(`Creating an API key for app: ${appId}.`);
-      createApiKey(appId, controlApiKey, keyName, keyCapabilities);
-    }
-  })
-} catch (error) {
-  core.setFailed(error.message);
-}
-
 const createApp = (accountId, controlApiKey, appName) => {
   return new Promise(resolve => {
     const appUrl = `https://control.ably.net/v1/accounts/${accountId}/apps`;
@@ -56,6 +39,23 @@ const createApp = (accountId, controlApiKey, appName) => {
       }
     });
   });
+}
+
+try {
+  const accountId = core.getInput('account-id');
+  const controlApiKey = core.getInput('control-api-key');
+  const appName = core.getInput('app-name');
+  const createKey = core.getBooleanInput('create-key');
+  const keyName = core.getInput('key-name');
+  const keyCapabilities = core.getInput('key-capabilities');
+  createApp(accountId, controlApiKey, appName).then((appId) =>  {
+    if (createKey) {
+      core.info(`Creating an API key for app: ${appId}.`);
+      createApiKey(appId, controlApiKey, keyName, keyCapabilities);
+    }
+  })
+} catch (error) {
+  core.setFailed(error.message);
 }
 
 function createApiKey(appId, controlApiKey, keyName, keyCapabilities) {
