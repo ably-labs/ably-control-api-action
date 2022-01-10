@@ -4748,6 +4748,7 @@ try {
   const keyCapabilities = core.getInput('key-capabilities');
   createApp(accountId, controlApiKey, appName);
   if (createKey) {
+    core.info(`Creating an API key for app: ${appId}.`);
     createApiKey(appId, controlApiKey, keyName, keyCapabilities);
   }
 } catch (error) {
