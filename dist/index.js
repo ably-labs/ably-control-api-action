@@ -4768,7 +4768,9 @@ const createApp = (accountId, controlApiKey, appName) => {
           headers: { 'Authorization': `Bearer ${controlApiKey}` },
         })
         .then(function (response) {
-          let app = response.data.filter(app => app.name.toLowerCase() === appName.toLowerCase())[0];
+          let app = response.data.filter(app => 
+            app.name.toLowerCase() === appName.toLowerCase() &&
+            app.status.toLowerCase() === "enabled")[0];
           core.info(`Using id of existing app named ${app.name}.`);
           core.setOutput("app-id", app.id);
           resolve(app.id);
