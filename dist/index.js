@@ -4746,18 +4746,12 @@ try {
   const createKey = getInput('create-key');
   const keyName = getInput('key-name');
   const keyCapabilities = getInput('key-capabilities');
-  let createAppPromise = new Promise((resolve, reject) => {
-    createApp(accountId, controlApiKey, appName);
-    resolve(appId);
-  });
-
+  createApp(accountId, controlApiKey, appName);
   if (createKey) {
-    createAppPromise.then((appId) => {
-      createApiKey(appId, controlApiKey, keyName, keyCapabilities);
-    });
+    createApiKey(appId, controlApiKey, keyName, keyCapabilities);
   }
 } catch (error) {
-  setFailed(error.message);
+  core.setFailed(error.message);
 }
 
 function createApp(accountId, controlApiKey, appName)
