@@ -44,7 +44,10 @@ const createApp = (accountId, controlApiKey, appName) => {
 const createApiKey = (appId, controlApiKey, keyName, keyCapabilities) => {
   return new Promise(resolve => {
     const keyUrl = `https://control.ably.net/v1/apps/${appId}/keys`;
-    const capabilities = keyCapabilities.split(',');
+    const capabilities = keyCapabilities
+      .split('-')
+      .map(capability => capability.trim())
+      .filter(capability => capability !== '');
     axios({
       method: 'post',
       url: keyUrl,
