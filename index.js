@@ -7,6 +7,7 @@ try {
   const appName = core.getInput('app-name');
   console.log(`Ably app to create: ${appName}!`);
   const createAppUrl = `https://control.ably.net/v1/accounts/${accountId}/apps`;
+  const getApsUrl = `https://control.ably.net/v1/accounts/${accountId}/apps`;
   axios({
     method: 'post',
     url: createAppUrl,
@@ -21,7 +22,20 @@ try {
       "apnsUseSandboxEndpoint": false
     }
   }).then(function (response) {
-    core.setOutput("app-id", response.data.id);
+    if (response.status === 422) {
+      // App already exists
+      // Get the app and return its id.
+      axios({
+        method: 'get',
+        url: getApsUrl,
+        headers: { 'Authorization': `Bearer ${controlApiKey}` },
+        }).then(function (response) {
+          let app = response.data.filter(app => app.id.toLowerCase() === appName.toLowerCase())[0];
+          core.setOutput("app-id", app.id);
+        });
+    } else {
+      core.setOutput("app-id", response.data.id);
+    }
   });
 } catch (error) {
   core.setFailed(error.message);
