@@ -1,6 +1,5 @@
 const core = require('@actions/core');
 const axios = require('axios');
-let appId;
 
 try {
   const accountId = core.getInput('account-id');
@@ -9,7 +8,7 @@ try {
   const createKey = core.getBooleanInput('create-key');
   const keyName = core.getInput('key-name');
   const keyCapabilities = core.getInput('key-capabilities');
-  createApp(accountId, controlApiKey, appName);
+  const appId = createApp(accountId, controlApiKey, appName);
   if (createKey) {
     core.info(`Creating an API key for app: ${appId}.`);
     createApiKey(appId, controlApiKey, keyName, keyCapabilities);
@@ -37,7 +36,7 @@ function createApp(accountId, controlApiKey, appName)
   })
   .then(function (response) {
     core.setOutput("app-id", response.data.id);
-    appId = response.data.id;
+    return response.data.id;
   })
   .catch(function (error) {
     if (error.response.status === 422) {
@@ -51,7 +50,7 @@ function createApp(accountId, controlApiKey, appName)
       .then(function (response) {
         let app = response.data.filter(app => app.name.toLowerCase() === appName.toLowerCase())[0];
         core.setOutput("app-id", app.id);
-        appId = app.id;
+        return app.id;
       });
     }
   });
