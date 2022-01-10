@@ -4742,7 +4742,13 @@ try {
   const accountId = core.getInput('account-id');
   const controlApiKey = core.getInput('control-api-key');
   const appName = core.getInput('app-name');
-  console.log(`Ably app to create: ${appName}!`);
+  createApp(accountId, controlApiKey, appName);
+} catch (error) {
+  core.setFailed(error.message);
+}
+
+function createApp(accountId, controlApiKey, appName)
+{
   const createAppUrl = `https://control.ably.net/v1/accounts/${accountId}/apps`;
   const getApsUrl = `https://control.ably.net/v1/accounts/${accountId}/apps`;
   axios({
@@ -4777,8 +4783,10 @@ try {
       });
     }
   });
-} catch (error) {
-  core.setFailed(error.message);
+}
+
+function createKey(accountId, controlApiKey, appName) {
+  
 }
 })();
 

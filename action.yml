@@ -9,13 +9,27 @@ inputs:
     description: 'The Control API key.'
     required: true
     default: 'MyAblyAccountId'
-  app-name:  # id of input
+  app-name:
     description: 'The name of the Ably app to be created.'
     required: true
-    default: 'MyAblyAppName'
+    default: 'Generated App from GitHub Action'
+  create-key:
+    description: 'Boolean to indicate if an API key should be created.'
+    required: false
+    default: 'true'
+  key-name:
+    description: 'The friendly name for the API key.'
+    required: false
+    default: 'Generated API key from GitHub Action'
+  key-capabilities:
+    description: 'Comma separated list of capabilities to assign to the API key.'
+    required: false
+    default: 'publish, subscribe'
 outputs:
-  client-id: # id of output
+  app-id:
     description: 'The ID of the created Ably app.'
+  app-api-key:
+    description: 'The API key of the created Ably app.'
 runs:
   using: 'node16'
   main: 'dist/index.js'
