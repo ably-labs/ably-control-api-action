@@ -2,11 +2,14 @@
 
 A GitHub Action to use the Ably Control API.
 
+![Required Inputs Workflow](https://github.com/ably-labs/ably-control-api-action/.github/workflows/required_inputs_test.yml/badge.svg)
+![All Inputs Workflow](https://github.com/ably-labs/ably-control-api-action/.github/workflows/all_inputs_test.yml/badge.svg)
+
 ## Usage
 
 ### Inputs
 
-The action has the following required inputs:
+The action has the following inputs:
 
 * `account-id` (**required**); the Ably account ID, see [these instructions](https://ably.com/documentation/control-api#account-id) how to obtain this.
 * `control-api-key`  (**required**); an Ably Control API key, see [these instructions](https://ably.com/documentation/control-api#authentication) how to create one. This key needs the following permissions:
@@ -19,7 +22,7 @@ The action has the following required inputs:
 * `key-name` (**optional**); the friendly name for the API key. Defaults to `'Generated API key'`.
 * `key-capabilities` (**optional**); a comma-separated list of capabilities to grant to the new key. Defaults to `'publish, subscribe'`. See the complete [list of capabilities](https://ably.com/documentation/core-features/authentication#capability-operations).
 
-It is important to keep the `account-id` and `control-api-key` inputs secret, as they are used to authenticate with the Ably Control API. Put these values in GitHub secrets and read the secret values when configuring the inputs of this action (see the example below).
+It is important to keep the `account-id` and `control-api-key` inputs secret, as they are used to authenticate with the Ably Control API. Put these values in [GitHub secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) of your repository and read the secret values when configuring the inputs of this action (see the example below).
 
 ### Outputs
 
