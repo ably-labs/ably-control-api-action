@@ -28,6 +28,7 @@ It is important to keep the `account-id` and `control-api-key` inputs secret, as
 
 * `app-name`; the name of the created Ably app.
 * `app-id`; the ID of the created Ably app.
+* `api-key-name`; the name of the created API key.
 * `api-key-id`; the ID of the created API key. This is marked as a secret so it won't be visible in the GitHub workflow logs.
 * `api-key-key`; the key value of the created API key. This is marked as a secret so it won't be visible in the GitHub workflow logs.
 
@@ -46,6 +47,7 @@ It is important to keep the `account-id` and `control-api-key` inputs secret, as
   run: |
     echo "App Name: ${{ steps.ablyapp.outputs.app-name }}"
     echo "App ID: ${{ steps.ablyapp.outputs.app-id }}"
+    echo "API Key Name: ${{ steps.ablyapp.outputs.api-key-name }}"
 ```
 
 ### Using all inputs
@@ -65,6 +67,7 @@ It is important to keep the `account-id` and `control-api-key` inputs secret, as
   run: |
     echo "App Name: ${{ steps.ablyapp.outputs.app-name }}"
     echo "App ID: ${{ steps.ablyapp.outputs.app-id }}"
+    echo "API Key Name: ${{ steps.ablyapp.outputs.api-key-name }}"
 ```
 
 ## More information

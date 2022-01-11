@@ -4797,6 +4797,7 @@ const getApiKey = (appId, controlApiKey, keyName) => {
       let key = response.data.filter(key => key.name.toLowerCase() === keyName.toLowerCase())[0];
       if (key !== undefined) {
         core.info(`Found existing API key named ${key.name}.`);
+        core.setOutput("api-key-name", key.name);
         core.setSecret("api-key-id");
         core.setOutput("api-key-id", key.id);
         core.setSecret("api-key-key");
@@ -4831,6 +4832,7 @@ const createApiKey = (appId, controlApiKey, keyName, keyCapabilities) => {
     })
     .then(function (response) {
       core.info(`Created API key with name: ${response.data.name}.`);
+      core.setOutput("api-key-name", response.data.name);
       core.setSecret('api-key-id');
       core.setOutput("api-key-id", response.data.id);
       core.setSecret('api-key-key');
