@@ -4786,7 +4786,7 @@ const createApp = (accountId, controlApiKey, appName) => {
 }
 
 const getApiKey = (appId, controlApiKey, keyName) => {
-  return new Promise(resolve, reject => {
+  return new Promise((resolve, reject) => {
     const keyUrl = `https://control.ably.net/v1/apps/${appId}/keys`;
     axios({
       method: 'get',
