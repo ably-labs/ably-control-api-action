@@ -116,7 +116,7 @@ try {
   createApp(accountId, controlApiKey, appName).then((appId) =>  {
     if (createKey) {
       getApiKey(appId, controlApiKey, keyName).then(
-        _result => _,
+        _result => core.info("Completed"),
         _error => createApiKey(appId, controlApiKey, keyName, keyCapabilities)
       );
     }
