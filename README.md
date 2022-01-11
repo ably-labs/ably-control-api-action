@@ -2,8 +2,8 @@
 
 A GitHub Action to use the Ably Control API.
 
-![Required Inputs Workflow](https://github.com/ably-labs/ably-control-api-action/.github/workflows/required_inputs_test.yml/badge.svg)
-![All Inputs Workflow](https://github.com/ably-labs/ably-control-api-action/.github/workflows/all_inputs_test.yml/badge.svg)
+![Required Inputs Workflow](https://github.com/ably-labs/ably-control-api-action/actions/workflows/required_inputs_test.yml/badge.svg)
+![All Inputs Workflow](https://github.com/ably-labs/ably-control-api-action/actions/workflows/all_inputs_test.yml/badge.svg)
 
 ## Usage
 
