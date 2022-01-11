@@ -16,14 +16,24 @@ The action has the following inputs:
 
 * `account-id` (**required**); the Ably account ID, see [these instructions](https://ably.com/documentation/control-api#account-id) how to obtain this.
 * `control-api-key`  (**required**); an Ably Control API key, see [these instructions](https://ably.com/documentation/control-api#authentication) how to create one. This key needs the following permissions:
-  * read:app
-  * write:app
-  * read:key
-  * write:key
+  * `read:app`
+  * `write:app`
+  * `read:key`
+  * `write:key`
 * `app-name` (**optional**); the name for the Ably app to create. Defaults to the repository name.
 * `create-key` (**optional**); a boolean value indicating whether to create an API key for the new app. Defaults to `'true'`.
 * `key-name` (**optional**); the friendly name for the API key. Defaults to `'Generated API key'`.
-* `key-capabilities` (**optional**); a comma-separated list of capabilities to grant to the new key. Defaults to `'publish, subscribe'`. See the complete [list of capabilities](https://ably.com/documentation/core-features/authentication#capability-operations).
+* `key-capabilities` (**optional**); a comma-separated list of capabilities to grant to the new key. Defaults to `'publish, subscribe'`. These are the available capabilities:
+  * `channel-metadata`,
+  * `history`,
+  * `presence`,
+  * `publish`,
+  * `push-admin`,
+  * `push-subscribe`,
+  * `statistics`,
+  * `subscribe`
+
+  For details of these capabilities see the [Ably docs](https://ably.com/documentation/core-features/authentication#capability-operations).
 
 It is important to keep the `account-id` and `control-api-key` inputs secret, as they are used to authenticate with the Ably Control API. Put these values in [GitHub secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) of your repository and read the secret values when configuring the inputs of this action (see the examples below).
 
@@ -42,7 +52,7 @@ It is important to keep the `account-id` and `control-api-key` inputs secret, as
 ```yml
 - name: Create Ably App
   id: ablyapp
-  uses: ably-labs/ably-control-api-action@v0.1.0
+  uses: ably-labs/ably-control-api-action@v0.1.2
   with:
     account-id: '${{ secrets.ABLY_ACCOUNT_ID }}'
     control-api-key: '${{ secrets.ABLY_CONTROL_API_KEY }}'
@@ -58,7 +68,7 @@ It is important to keep the `account-id` and `control-api-key` inputs secret, as
 ```yml
 - name: Create Ably App
   id: ablyapp
-  uses: ably-labs/ably-control-api-action@v0.1.0
+  uses: ably-labs/ably-control-api-action@v0.1.2
   with:
       account-id: '${{ secrets.ABLY_ACCOUNT_ID }}'
       control-api-key: '${{ secrets.ABLY_CONTROL_API_KEY }}'
