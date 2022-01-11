@@ -4756,6 +4756,7 @@ const createApp = (accountId, controlApiKey, appName) => {
       }
     })
     .then(function (response) {
+      core.info(`Created app named ${appName}.`);
       core.setOutput("app-name", response.data.name);
       core.setOutput("app-id", response.data.id);
       resolve(response.data.id);
@@ -4777,7 +4778,37 @@ const createApp = (accountId, controlApiKey, appName) => {
           core.setOutput("app-id", app.id);
           resolve(app.id);
         });
+      } else {
+        throw error;
       }
+    });
+  });
+}
+
+const getApiKey = (appId, controlApiKey, keyName) => {
+  return new Promise(resolve, reject => {
+    const keyUrl = `https://control.ably.net/v1/apps/${appId}/keys`;
+    axios({
+      method: 'get',
+      url: keyUrl,
+      headers: { 'Authorization': `Bearer ${controlApiKey}` },
+    })
+    .then(function (response) {
+      let key = response.data.filter(key => key.name.toLowerCase() === keyName.toLowerCase())[0];
+      if (key !== undefined) {
+        core.info(`Found existing API key named ${key.name}.`);
+        core.setSecret("api-key-id");
+        core.setOutput("api-key-id", key.id);
+        core.setSecret("api-key-key");
+        core.setOutput("api-key-key", key.key);
+        resolve();
+      } else {
+        core.info(`No existing API Key named ${keyName} was found.`);
+        reject(new Error("No API key found."));
+      }
+    })
+    .catch(function (error) {
+      throw error;
     });
   });
 }
@@ -4807,25 +4838,7 @@ const createApiKey = (appId, controlApiKey, keyName, keyCapabilities) => {
       resolve();
     })
     .catch(function (error) {
-      if (error.response.status === 422) {
-        core.info(`API Key named ${keyName} already exists.`);
-        axios({
-          method: 'get',
-          url: keyUrl,
-          headers: { 'Authorization': `Bearer ${controlApiKey}` },
-        })
-        .then(function (response) {
-          let key = response.data.filter(key => key.name.toLowerCase() === keyName.toLowerCase())[0];
-          core.info(`Using id and key of existing API Key named ${key.name}.`);
-          core.setSecret('api-key-id');
-          core.setOutput("api-key-id", key.id);
-          core.setSecret('api-key-key');
-          core.setOutput("api-key-key", key.key);
-          resolve();
-        });
-      } else {
-        throw error;
-      }
+      throw error;
     });
   });
 }
@@ -4839,8 +4852,10 @@ try {
   const keyCapabilities = core.getInput('key-capabilities');
   createApp(accountId, controlApiKey, appName).then((appId) =>  {
     if (createKey) {
-      core.info(`Creating an API key for app: ${appId}.`);
-      createApiKey(appId, controlApiKey, keyName, keyCapabilities);
+      getApiKey(appId, controlApiKey, keyName).then(
+        _result => _,
+        _error => createApiKey(appId, controlApiKey, keyName, keyCapabilities)
+      );
     }
   })
 } catch (error) {
