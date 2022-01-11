@@ -1,5 +1,8 @@
 name: 'Ably Control API'
 description: 'GitHub Action to use the Ably Control API in your workflow.'
+branding:
+  icon: 'plus'
+  color: 'red'
 inputs:
   account-id:
     description: 'The name of your Ably account.'
