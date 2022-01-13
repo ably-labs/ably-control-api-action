@@ -40,10 +40,12 @@ It is important to keep the `account-id` and `control-api-key` inputs secret, as
 ### Outputs
 
 * `app-name`; the name of the created Ably app.
-* `app-id`; the ID of the created Ably app.
+* `app-id`; the ID of the created Ably app.<sup>*</sup>
 * `api-key-name`; the name of the created API key.
-* `api-key-id`; the ID of the created API key. This is marked as a secret so it won't be visible in the GitHub workflow logs.
-* `api-key-key`; the key value of the created API key. This is marked as a secret so it won't be visible in the GitHub workflow logs.
+* `api-key-id`; the ID of the created API key.<sup>*</sup>
+* `api-key-key`; the key value of the created API key. <sup>*</sup>
+
+> (*) Output is marked as a secret, so it won't be visible in the GitHub workflow logs.
 
 ### Examples
 
@@ -52,7 +54,7 @@ It is important to keep the `account-id` and `control-api-key` inputs secret, as
 ```yml
 - name: Create Ably App
   id: ablyapp
-  uses: ably-labs/ably-control-api-action@v0.1.3
+  uses: ably-labs/ably-control-api-action@v0.1.4
   with:
     account-id: '${{ secrets.ABLY_ACCOUNT_ID }}'
     control-api-key: '${{ secrets.ABLY_CONTROL_API_KEY }}'
@@ -68,7 +70,7 @@ It is important to keep the `account-id` and `control-api-key` inputs secret, as
 ```yml
 - name: Create Ably App
   id: ablyapp
-  uses: ably-labs/ably-control-api-action@v0.1.3
+  uses: ably-labs/ably-control-api-action@v0.1.4
   with:
       account-id: '${{ secrets.ABLY_ACCOUNT_ID }}'
       control-api-key: '${{ secrets.ABLY_CONTROL_API_KEY }}'

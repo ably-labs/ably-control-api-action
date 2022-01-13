@@ -32,6 +32,7 @@ core.info(`Generating Ably Keys...`);
 
   core.info(`Account, application and keys all exist - storing secrets...`);
 
+  core.setSecret(app.id);
   core.setSecret(key.id);
   core.setSecret(key.key);
 
