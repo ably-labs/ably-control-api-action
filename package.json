@@ -1,6 +1,6 @@
 {
   "name": "ably-control-api-action",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "A GitHub Action to use the Ably Control API.",
   "main": "index.js",
   "scripts": {

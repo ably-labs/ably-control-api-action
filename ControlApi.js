@@ -64,7 +64,7 @@ class AblyControlApi {
       return app;
     }
 
-    core.info(`${appName} does not exist!`);
+    core.info(`${appName} does not exist.`);
     return this.createApp(appName);
   }
 
