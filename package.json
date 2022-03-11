@@ -1,6 +1,6 @@
 {
   "name": "ably-control-api-action",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A GitHub Action to use the Ably Control API.",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,7 @@
   "dependencies": {
     "@actions/core": "^1.6.0",
     "@actions/github": "^5.0.0",
-    "node-fetch": "^2.6.6"
+    "node-fetch": "^2.6.7"
   },
   "devDependencies": {
     "@vercel/ncc": "^0.33.1"
