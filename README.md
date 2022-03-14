@@ -8,6 +8,8 @@ A GitHub Action to use the [Ably Control API](https://ably.com/documentation/con
 * Create an Ably application.
 * Add an API key to an application, with a list of capabilities.
 
+![Control API GitHub Action diagram](ably-control-api-action.png)
+
 ## Usage
 
 ### Inputs
@@ -86,5 +88,7 @@ It is important to keep the `account-id` and `control-api-key` inputs secret, as
 ```
 
 ## More information
+
+To learn more about Infrastructure as Code, GitHub workflows & actions read [this blog post](https://ably.com/blog/infrastructure-as-code-ably-control-api-github-action).
 
 For more information about the Ably Control API please see the [Ably docs](https://ably.com/documentation/control-api).
