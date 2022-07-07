@@ -53,6 +53,10 @@ class AblyControlApi {
     };
 
     const response = await this.post(`${accountApi}/${this.accountId}/apps`, request);
+    if (!response.ok) {
+      core.error(response.statusText);
+      throw new Error(response.text());
+    }
     return response.json();
   }
 
@@ -87,6 +91,10 @@ class AblyControlApi {
       .filter((capability) => capability !== "");
 
     const response = await this.post(`${appApi}/${appId}/keys`, { name: keyName, capability: { "*": capabilities } });
+    if (!response.ok) {
+      core.error(response.statusText);
+      throw new Error(response.text());
+    }
     return response.json();
   }
 
