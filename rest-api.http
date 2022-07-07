@@ -1,0 +1,22 @@
+@accountsUrl=https://control.ably.net/v1/accounts
+
+### Get Apps
+
+GET {{accountsUrl}}/{{accountId}}/apps
+Content-Type: application/json
+Authorization: Bearer {{controlApiKey}}
+
+### Create App
+
+@appName=testing-the-control-api
+
+POST {{accountsUrl}}/{{accountId}}/apps
+Content-Type: application/json
+Authorization: Bearer {{controlApiKey}}
+
+{
+    "name": "{{appName}}",
+    "status": "enabled",
+    "tlsOnly": true,
+    "apnsUseSandboxEndpoint": false
+}
