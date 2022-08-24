@@ -56,7 +56,7 @@ It is important to keep the `account-id` and `control-api-key` inputs secret, as
 ```yml
 - name: Create Ably App
   id: ablyapp
-  uses: ably-labs/ably-control-api-action@v0.1.5
+  uses: ably-labs/ably-control-api-action@v0.1.6
   with:
     account-id: '${{ secrets.ABLY_ACCOUNT_ID }}'
     control-api-key: '${{ secrets.ABLY_CONTROL_API_KEY }}'
@@ -72,7 +72,7 @@ It is important to keep the `account-id` and `control-api-key` inputs secret, as
 ```yml
 - name: Create Ably App
   id: ablyapp
-  uses: ably-labs/ably-control-api-action@v0.1.5
+  uses: ably-labs/ably-control-api-action@v0.1.6
   with:
       account-id: '${{ secrets.ABLY_ACCOUNT_ID }}'
       control-api-key: '${{ secrets.ABLY_CONTROL_API_KEY }}'
