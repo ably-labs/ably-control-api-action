@@ -1,4 +1,4 @@
-# Ably Control Api Action
+# Ably Control API Action
 
 ![Required Inputs Workflow](https://github.com/ably-labs/ably-control-api-action/actions/workflows/required_inputs_test.yml/badge.svg)
 ![All Inputs Workflow](https://github.com/ably-labs/ably-control-api-action/actions/workflows/all_inputs_test.yml/badge.svg)
